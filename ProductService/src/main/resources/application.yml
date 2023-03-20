@@ -1,0 +1,43 @@
+server:
+  port: 8901
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8903/eureka/
+    registry-fetch-interval-seconds: 1
+
+spring:
+  application:
+    name: ProductService
+  zipkin:
+    base-url: http://localhost:9411/
+  sleuth:
+    sampler:
+      probability: 1 #100% (default = 10%)
+
+resilience4j:
+  circuitBreaker:
+    instances:
+      getStock:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+management:
+  health:
+    circuitBreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
