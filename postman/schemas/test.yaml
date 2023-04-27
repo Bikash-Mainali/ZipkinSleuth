@@ -2,7 +2,7 @@ openapi: '3.0.0'
 info:
   version: '1.2.3'
   title: 'my-api'
-  description: Buy or rent spacecrafts
+  description: Buy or rent spacecraftsdfsdfsdfdsfsdfsds
 
 paths:
   /spacecrafts/{spacecraftId}:
